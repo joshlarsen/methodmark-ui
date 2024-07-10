@@ -43,7 +43,7 @@
             Enter your email below to create your account
           </p>
         </div>
-        <UserAuthForm />
+        <AuthForm />
         <p class="px-8 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our
           <a href="/terms"
@@ -64,5 +64,5 @@
 
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
-import UserAuthForm from '@/components/session/AuthForm.vue'
+import AuthForm from '@/components/session/AuthForm.vue'
 </script>
