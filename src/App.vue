@@ -1,10 +1,5 @@
 <template>
   <div class="flex min-h-screen flex-col">
-    <div class="p-2">
-      <div class="max-w-lg mx-auto p-4 bg-zinc-300 rounded">
-        <Button>Click me</Button>
-      </div>
-    </div>
     <main class="container">
       <Session v-if="!loggedIn" />
       <Dashboard v-if="loggedIn" />
