@@ -57,6 +57,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useConfigStore } from "@/stores/config"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -65,13 +67,14 @@ import { GithubLogoIcon } from "@radix-icons/vue"
 
 
 const isLoading = ref(false)
+const cfg = useConfigStore()
 
 async function onSubmit(event: Event) {
   event.preventDefault()
   isLoading.value = true
 
   setTimeout(() => {
-    isLoading.value = false
-  }, 3000)
+    cfg.signIn()
+  }, 500)
 }
 </script>

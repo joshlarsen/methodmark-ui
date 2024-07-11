@@ -93,7 +93,7 @@ export function useConfigStore(): ConfigStore {
 		console.log('config store toggle dark')
 		isDark.value = !isDark.value
 		document.documentElement.classList.toggle('dark')
-		localStorage.setItem('voodoo.dark', isDark.value.toString())
+		localStorage.setItem('mm.dark', isDark.value.toString())
 	}
 
 	// set dark mode
@@ -101,14 +101,14 @@ export function useConfigStore(): ConfigStore {
 		isDark.value = true
 		document.documentElement.classList.remove('dark')
 		document.documentElement.classList.add('dark')
-		localStorage.setItem('voodoo.dark', isDark.value.toString())
+		localStorage.setItem('mm.dark', isDark.value.toString())
 	}
 
 	// set light mode
 	const setThemeLight = () => {
 		isDark.value = false
 		document.documentElement.classList.remove('dark')
-		localStorage.setItem('voodoo.dark', isDark.value.toString())
+		localStorage.setItem('mm.dark', isDark.value.toString())
 	}
 
 	// set theme color
@@ -127,12 +127,12 @@ export function useConfigStore(): ConfigStore {
 		theme.value = color
 
 		// write it to localStorage
-		localStorage.setItem('voodoo.theme', color)
+		localStorage.setItem('mm.theme', color)
 	}
 
 	const setThemeData = () => {
 		// set dark mode
-		const dark = localStorage.getItem('voodoo.dark')
+		const dark = localStorage.getItem('mm.dark')
 		if (dark == 'true') {
 			setThemeDark()
 		} else {
@@ -140,7 +140,7 @@ export function useConfigStore(): ConfigStore {
 		}
 
 		// set theme color
-		const theme = localStorage.getItem('voodoo.theme')
+		const theme = localStorage.getItem('mm.theme')
 		if (theme) {
 			setThemeColor(theme)
 		}
@@ -223,10 +223,10 @@ export function useConfigStore(): ConfigStore {
     //
 		// set default theme color if none is set
     //
-		if (localStorage.getItem('voodoo.dark') === null) {
+		if (localStorage.getItem('mm.dark') === null) {
 			setThemeLight()
 		}
-		if (localStorage.getItem('voodoo.theme') === null) {
+		if (localStorage.getItem('mm.theme') === null) {
 			setThemeColor('gray')
 		}
 

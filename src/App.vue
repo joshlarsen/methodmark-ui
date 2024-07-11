@@ -8,10 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
+import { useConfigStore } from "@/stores/config"
+
 import Session from '@/components/SessionMain.vue'
 import Dashboard from '@/components/DashboardMain.vue'
-import { Button } from '@/components/ui/button'
 
-const loggedIn = ref(false)
+const cfg = useConfigStore()
+const loggedIn = ref(cfg.loggedIn)
 </script>

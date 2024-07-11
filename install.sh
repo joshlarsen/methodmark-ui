@@ -21,6 +21,8 @@ yarn add -D autoprefixer \
   tailwindcss-animate \
   tailwindcss \
   vue-tsc \
+  @eslint/js \
+  @eslint/eslintrc \
   @radix-icons/vue \
   @vueuse/core \
   @types/node \
@@ -29,3 +31,4 @@ yarn add -D autoprefixer \
   @unovis/ts \
   @unovis/vue \
   @vitejs/plugin-vue
+
