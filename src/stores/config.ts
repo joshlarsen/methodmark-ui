@@ -1,13 +1,7 @@
-import { Ref, computed, ref, onMounted } from 'vue'
-import { themes } from '@/lib/registry/themes'
+import { Ref, ref } from 'vue'
 import axios from 'axios'
 import moment from 'moment'
 import { AxiosInstance } from 'axios'
-
-
-/**
- * copy paste from GIN config store: https://github.com/ghostsecurity/gin/blob/main/ui/src/stores/config.js
- */
 
 // axios setup
 const BASE_URL = import.meta.env.VITE_BASE_URL
@@ -38,129 +32,13 @@ interface ConfigStore {
   localeTimestamp: (ts: number) => string
   localeTimestampShort: (ts: number) => string
   localeDate: (ts: number) => string
-  themeColors: string[]
-  themePrimary: Ref<string>
-  themeSecondary: Ref<string>
-  themeBackground: Ref<string>
-  isDark: Ref<boolean>
-  theme: Ref<string>
-  toggleThemeDark: () => void
-  setThemeColor: (color: string) => void
-  setThemeData: () => void
   loggedIn: Ref<boolean>
+  timeAgoInWords: (ts: number) => string
   signIn: () => void
   signOut: () => void
-  timeAgoInWords: (ts: number) => string
-}
-
-interface Theme{
-  name: string
-  cssVars: {
-    dark: {
-      primary: string
-      secondary: string
-      background: string
-    }
-    light: {
-      primary: string
-      secondary: string
-      background: string
-    }
-  }
-
 }
 
 export function useConfigStore(): ConfigStore {
-	const isDark = ref(false)
-	const theme = ref('')
-	const themeColors = [
-		'zinc',
-		'rose',
-		'blue',
-		'green',
-		'orange',
-		'red',
-		'violet',
-		'slate',
-		'stone',
-		'gray',
-		'neutral',
-		'yellow',
-	]
-
-	// toggl dark mode
-	const toggleThemeDark = () => {
-		console.log('config store toggle dark')
-		isDark.value = !isDark.value
-		document.documentElement.classList.toggle('dark')
-		localStorage.setItem('mm.dark', isDark.value.toString())
-	}
-
-	// set dark mode
-	const setThemeDark = () => {
-		isDark.value = true
-		document.documentElement.classList.remove('dark')
-		document.documentElement.classList.add('dark')
-		localStorage.setItem('mm.dark', isDark.value.toString())
-	}
-
-	// set light mode
-	const setThemeLight = () => {
-		isDark.value = false
-		document.documentElement.classList.remove('dark')
-		localStorage.setItem('mm.dark', isDark.value.toString())
-	}
-
-	// set theme color
-	const setThemeColor = (color: string) => {
-		// valid color
-		if (!themeColors.includes(color)) {
-			return
-		}
-
-		// remove any existing theme color
-		document.documentElement.classList.remove(...themeColors.map((color) => `theme-${color}`))
-
-		// add new theme color
-		document.documentElement.classList.add(`theme-${color}`)
-
-		theme.value = color
-
-		// write it to localStorage
-		localStorage.setItem('mm.theme', color)
-	}
-
-	const setThemeData = () => {
-		// set dark mode
-		const dark = localStorage.getItem('mm.dark')
-		if (dark == 'true') {
-			setThemeDark()
-		} else {
-			setThemeLight()
-		}
-
-		// set theme color
-		const theme = localStorage.getItem('mm.theme')
-		if (theme) {
-			setThemeColor(theme)
-		}
-	}
-
-	// get theme colors for charts
-	// TODO: refactor to a compbined function/map and make it reactive, so color updates on theme change
-	const themePrimary = computed(() => {
-		const t = themes.find((t: Theme) => t.name === theme.value)
-		return `hsl(${t?.cssVars[isDark.value ? 'dark' : 'light'].primary})`
-	})
-	const themeSecondary = computed(() => {
-		const t = themes.find((t: Theme) => t.name === theme.value)
-		return `hsl(${t?.cssVars[isDark.value ? 'dark' : 'light'].secondary})`
-	})
-	const themeBackground = computed(() => {
-		const t = themes.find((t: Theme) => t.name === theme.value)
-		return `hsl(${t?.cssVars[isDark.value ? 'dark' : 'light'].background})`
-	})
-
   const localeTimestamp = (ts: number) => {
     const date = new Date(ts * 1000)
     const timeString = date.toLocaleTimeString(userLocale, {
@@ -219,21 +97,6 @@ export function useConfigStore(): ConfigStore {
     return formatter.format(n)
   }
 
-	onMounted(() => {
-    //
-		// set default theme color if none is set
-    //
-		if (localStorage.getItem('mm.dark') === null) {
-			setThemeLight()
-		}
-		if (localStorage.getItem('mm.theme') === null) {
-			setThemeColor('gray')
-		}
-
-		setThemeData()
-	})
-
-
 	return {
 		axios: axiosInstance,
     customNumberFormat,
@@ -242,15 +105,6 @@ export function useConfigStore(): ConfigStore {
     localeTimestamp,
     localeTimestampShort,
     localeDate,
-		themeColors,
-		themePrimary,
-		themeSecondary,
-		themeBackground,
-		isDark,
-		theme,
-		toggleThemeDark,
-		setThemeColor,
-    setThemeData,
 		signIn,
 		signOut,
     timeAgoInWords

@@ -23,8 +23,15 @@ yarn add -D autoprefixer \
   vue-tsc \
   @eslint/js \
   @eslint/eslintrc \
+  @headlessui/vue \
+  @heroicons/vue \
   @radix-icons/vue \
   @vueuse/core \
+  @tailwindcss/aspect-ratio \
+  @tailwindcss/container-queries \
+  @tailwindcss/forms \
+  @tailwindcss/typography \
+  @tailwindcss/aspect-ratio \
   @types/node \
   @typescript-eslint/eslint-plugin \
   @typescript-eslint/parser \
